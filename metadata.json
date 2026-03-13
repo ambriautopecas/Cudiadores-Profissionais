@@ -1,0 +1,7 @@
+{
+  "name": "Cuidadores Profissionais",
+  "description": "Assistência humanizada para idosos e cuidados especiais em Ribeirão Preto.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
