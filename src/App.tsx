@@ -4,64 +4,64 @@
  */
 
 import { motion, AnimatePresence } from "motion/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 
 const SERVICES = [
   {
-    icon: "elderly",
-    title: "Cuidador de Idosos",
-    description: "Apoio completo na rotina, higiene, alimentação e companhia para a terceira idade.",
+    icon: "gavel",
+    title: "Assessoria Jurídica",
+    description: "Defesa dos direitos trabalhistas e orientação jurídica especializada para o cuidador.",
+    image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    icon: "school",
+    title: "Cursos e Capacitação",
+    description: "Programas de atualização profissional e certificações para valorizar seu currículo.",
+    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    icon: "payments",
+    title: "Convênios e Benefícios",
+    description: "Descontos exclusivos em farmácias, exames, lazer e serviços para nossos associados.",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    icon: "groups",
+    title: "Representação Sindical",
+    description: "Voz ativa nas negociações coletivas e na busca por melhores condições de trabalho.",
+    image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    icon: "health_and_safety",
+    title: "Saúde do Trabalhador",
+    description: "Apoio psicológico e orientações sobre ergonomia e segurança no ambiente de trabalho.",
     image: "https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=600&q=80"
   },
   {
-    icon: "local_hospital",
-    title: "Acompanhamento Hospitalar",
-    description: "Suporte profissional qualificado durante internações e exames médicos.",
-    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    icon: "healing",
-    title: "Pós-Cirúrgico",
-    description: "Recuperação assistida com foco na cicatrização e administração correta de cuidados.",
-    image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    icon: "home",
-    title: "Cuidador Domiciliar",
-    description: "Assistência contínua ou pontual no conforto e segurança do próprio lar.",
-    image: "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    icon: "medication",
-    title: "Auxílio em Medicação",
-    description: "Controle rigoroso de horários, dosagens e orientações médicas prescritas.",
-    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    icon: "accessibility_new",
-    title: "Atividades Diárias",
-    description: "Auxílio em mobilidade, estímulos cognitivos e integração social do paciente.",
-    image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=600&q=80"
+    icon: "newspaper",
+    title: "Informativos e Notícias",
+    description: "Fique por dentro de todas as mudanças na legislação e eventos da categoria.",
+    image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=600&q=80"
   },
 ];
 
 const TESTIMONIALS = [
   {
-    text: "O atendimento foi impecável desde o primeiro contato. O cuidador que nos assistiu foi extremamente carinhoso com meu pai.",
-    name: "Maria Silva",
-    role: "Filha de paciente",
+    text: "Desde que me associei, me sinto muito mais segura. O suporte jurídico foi fundamental para resolver uma questão pendente.",
+    name: "Cláudia Rocha",
+    role: "Cuidadora Associada",
     image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&h=100&q=80",
   },
   {
-    text: "Profissionais muito qualificados. Trouxeram tranquilidade para nossa família após a cirurgia da minha mãe.",
-    name: "João Oliveira",
-    role: "Responsável familiar",
+    text: "Os cursos de capacitação do sindicato me ajudaram a conseguir melhores oportunidades. A valorização é real.",
+    name: "Ricardo Santos",
+    role: "Cuidador Profissional",
     image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&h=100&q=80",
   },
   {
-    text: "Serviço de alta confiança. A supervisão é constante e o feedback que recebemos é muito detalhado e profissional.",
-    name: "Ana Paula",
-    role: "Cliente",
+    text: "Os convênios em farmácias e clínicas ajudam muito no orçamento mensal. Vale muito a pena fazer parte.",
+    name: "Sônia Mendes",
+    role: "Associada há 2 anos",
     image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&h=100&q=80",
   },
 ];
@@ -77,6 +77,25 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showCookieBanner, setShowCookieBanner] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  const [filiaForm, setFiliaForm] = useState({
+    nome: '',
+    telefone: '',
+    experiencia: '',
+    cidade: 'Ribeirão Preto'
+  });
+
+  const handleFiliaSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const message = `Olá! Quero me filiar ao Sindicato dos Cuidadores.
+Meus dados:
+Nome: ${filiaForm.nome}
+Telefone: ${filiaForm.telefone}
+Experiência: ${filiaForm.experiencia}
+Cidade: ${filiaForm.cidade}`;
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/5516988068810?text=${encodedMessage}`, '_blank');
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -144,16 +163,16 @@ export default function App() {
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center gap-3">
               <div className="size-10 bg-primary rounded-lg flex items-center justify-center text-white">
-                <span className="material-symbols-outlined text-2xl normal-case">medical_services</span>
+                <span className="material-symbols-outlined text-2xl normal-case">groups</span>
               </div>
-              <span className="text-slate-900 text-xl font-bold tracking-tight">Cuidadores Profissionais</span>
+              <span className="text-slate-900 text-xl font-bold tracking-tight">Sindicato Cuidadores</span>
             </div>
             
             <nav className="hidden md:flex items-center gap-8">
-              {["Início", "Quem Somos", "Serviços", "Como Funciona", "Contato"].map((item) => (
+              {["Início", "O Sindicato", "Benefícios", "Filie-se", "Contato"].map((item) => (
                 <a
                   key={item}
-                  href={`#${item.toLowerCase().replace(" ", "-")}`}
+                  href={item === "Início" ? "#inicio" : `#${item.toLowerCase().replace(" ", "-")}`}
                   className="text-sm font-semibold text-slate-600 hover:text-primary transition-colors"
                 >
                   {item}
@@ -166,10 +185,10 @@ export default function App() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="hidden sm:inline-flex items-center justify-center bg-primary text-white text-sm font-bold px-5 py-2.5 rounded-lg hover:bg-primary/90 transition-all shadow-md shadow-primary/20"
-                href="https://wa.me/5516988068810?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20serviços%20de%20cuidadores.%20Vi%20o%20site%20de%20vocês."
+                href="https://wa.me/5516988068810?text=Olá!%20Gostaria%20de%20me%20filiar%20ao%20Sindicato%20dos%20Cuidadores.%20Vi%20o%20site%20de%20vocês."
                 aria-label="Falar no WhatsApp"
               >
-                Falar no WhatsApp
+                Filie-se Agora
               </motion.a>
               <button 
                 className="md:hidden text-slate-600 p-2"
@@ -190,10 +209,10 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             className="md:hidden bg-white border-b border-slate-200 px-4 py-6 flex flex-col gap-4"
           >
-            {["Início", "Quem Somos", "Serviços", "Como Funciona", "Contato"].map((item) => (
+            {["Início", "O Sindicato", "Benefícios", "Filie-se", "Contato"].map((item) => (
               <a
                 key={item}
-                href={`#${item.toLowerCase().replace(" ", "-")}`}
+                href={item === "Início" ? "#inicio" : `#${item.toLowerCase().replace(" ", "-")}`}
                 className="text-lg font-semibold text-slate-600"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -219,10 +238,10 @@ export default function App() {
                 <span className="uppercase">Referência em Ribeirão Preto</span>
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-tight tracking-tight">
-                Cuidadores Profissionais para quem você <span className="text-primary">mais ama</span>
+                União e Força para os <span className="text-primary">Cuidadores Profissionais</span>
               </h1>
               <p className="text-lg text-slate-600 max-w-xl">
-                Assistência humanizada para idosos e pessoas que precisam de cuidados especiais com segurança, carinho e responsabilidade profissional no conforto do seu lar.
+                Representação legítima, defesa de direitos e valorização da categoria. Juntos somos mais fortes na busca por dignidade e reconhecimento profissional.
               </p>
               <div className="flex flex-wrap gap-4">
                 <motion.a
@@ -231,14 +250,14 @@ export default function App() {
                   className="bg-primary text-white font-bold px-8 py-4 rounded-xl hover:bg-primary/90 transition-all flex items-center gap-2 shadow-lg shadow-primary/25"
                   href="#contato"
                 >
-                  Solicitar Cuidador
-                  <span className="material-symbols-outlined normal-case">arrow_forward</span>
+                  Quero me Filiar
+                  <span className="material-symbols-outlined normal-case">person_add</span>
                 </motion.a>
                 <motion.a
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="bg-white border-2 border-slate-200 text-slate-700 font-bold px-8 py-4 rounded-xl hover:bg-slate-50 transition-all"
-                  href="https://wa.me/5516988068810?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20serviços%20de%20cuidadores.%20Vi%20o%20site%20de%20vocês."
+                  href="https://wa.me/5516988068810?text=Olá!%20Gostaria%20de%20me%20filiar%20ao%20Sindicato%20dos%20Cuidadores.%20Vi%20o%20site%20de%20vocês."
                 >
                   Falar no WhatsApp
                 </motion.a>
@@ -264,8 +283,8 @@ export default function App() {
           </div>
         </section>
 
-        {/* Quem Somos */}
-        <section id="quem-somos" className="py-24 bg-background-light overflow-hidden">
+        {/* O Sindicato */}
+        <section id="o-sindicato" className="py-24 bg-background-light overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
               <motion.div
@@ -273,19 +292,19 @@ export default function App() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">Quem Somos</h2>
+                <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">O Sindicato</h2>
                 <div className="w-20 h-1.5 bg-secondary rounded-full mb-6"></div>
                 <p className="text-slate-600 text-lg mb-6">
-                  Oferecemos cuidado especializado e assistência humanizada, focando na segurança e no bem-estar de quem você ama, com profissionais rigorosamente selecionados.
+                  Somos a entidade representativa dos Cuidadores Profissionais em Ribeirão Preto e região, lutando incansavelmente pela valorização e respeito à nossa categoria.
                 </p>
                 <p className="text-slate-600 mb-8">
-                  Nossa equipe é composta por profissionais dedicados que entendem a importância da dignidade e do respeito no cuidado domiciliar. Atuamos em Ribeirão Preto com excelência e compromisso.
+                  Nossa missão é garantir que cada cuidador tenha seus direitos respeitados, acesso à formação contínua e suporte em todas as etapas de sua jornada profissional.
                 </p>
                 <div className="flex flex-col gap-4">
                   {[
-                    { icon: "medical_information", title: "Cuidado Especializado", desc: "Profissionais treinados e capacitados.", color: "primary" },
-                    { icon: "favorite", title: "Assistência Humanizada", desc: "Tratamento pautado na empatia e respeito.", color: "secondary-dark" },
-                    { icon: "security", title: "Segurança Total", desc: "Protocolos rigorosos para sua tranquilidade.", color: "primary" }
+                    { icon: "gavel", title: "Defesa Jurídica", desc: "Proteção total aos seus direitos trabalhistas.", color: "primary" },
+                    { icon: "workspace_premium", title: "Valorização Profissional", desc: "Luta por pisos salariais e melhores condições.", color: "secondary-dark" },
+                    { icon: "handshake", title: "União da Categoria", desc: "Juntos somos ouvidos pelo poder público e empresas.", color: "primary" }
                   ].map((item, idx) => (
                     <div key={idx} className="flex items-center gap-4">
                       <div className={`size-10 bg-slate-200 text-${item.color} rounded-lg flex items-center justify-center shrink-0`}>
@@ -358,14 +377,14 @@ export default function App() {
           </div>
         </section>
 
-        {/* Nossos Serviços */}
-        <section id="servicos" className="py-24 bg-white">
+        {/* Benefícios */}
+        <section id="benefícios" className="py-24 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">Nossos Serviços</h2>
+              <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">Benefícios do Associado</h2>
               <div className="w-20 h-1.5 bg-primary mx-auto rounded-full mb-6"></div>
               <p className="text-slate-600 max-w-2xl mx-auto text-lg">
-                Soluções personalizadas para cada necessidade de cuidado, disponíveis em Ribeirão Preto e região.
+                Ao se tornar um associado, você tem acesso a uma rede completa de suporte e vantagens exclusivas.
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -396,7 +415,7 @@ export default function App() {
                     <h3 className="text-xl font-bold text-slate-900 mb-3">{service.title}</h3>
                     <p className="text-slate-600 mb-6 text-sm leading-relaxed">{service.description}</p>
                     <a className="text-primary font-bold inline-flex items-center gap-2 group-hover:gap-3 transition-all text-sm" href="#contato">
-                      Solicitar Orçamento <span className="material-symbols-outlined text-sm normal-case">arrow_forward</span>
+                      Saiba Mais <span className="material-symbols-outlined text-sm normal-case">arrow_forward</span>
                     </a>
                   </div>
                 </motion.div>
@@ -415,13 +434,13 @@ export default function App() {
               viewport={{ once: true }}
               className="lg:w-1/2"
             >
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-8 leading-tight">Por que escolher nossos cuidadores?</h2>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-8 leading-tight">Por que se filiar ao nosso sindicato?</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {[
-                  { title: "Profissionais Qualificados", desc: "Rigoroso processo de seleção e treinamento contínuo." },
-                  { title: "Disponibilidade 24h", desc: "Plantões e escala personalizada para sua necessidade." },
-                  { title: "Supervisão Técnica", desc: "Acompanhamento regular por equipe de coordenação." },
-                  { title: "Atendimento Ágil", desc: "Resposta rápida para solicitações e urgências." }
+                  { title: "Segurança Jurídica", desc: "Advogados prontos para defender seus direitos trabalhistas." },
+                  { title: "Cursos Gratuitos", desc: "Acesso a workshops e treinamentos de atualização." },
+                  { title: "Clube de Vantagens", desc: "Descontos em diversos estabelecimentos parceiros." },
+                  { title: "Força Política", desc: "Representação ativa junto aos órgãos governamentais." }
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-start gap-3">
                     <span className="material-symbols-outlined bg-white/20 p-1 rounded-md normal-case">check_circle</span>
@@ -462,23 +481,23 @@ export default function App() {
           </div>
         </section>
 
-        {/* Como Funciona */}
-        <section id="como-funciona" className="py-24 bg-background-light">
+        {/* Filie-se */}
+        <section id="filie-se" className="py-24 bg-background-light">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">Como Funciona</h2>
+              <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">Como se Filiar</h2>
               <div className="w-20 h-1.5 bg-secondary mx-auto rounded-full mb-6"></div>
               <p className="text-slate-600 max-w-2xl mx-auto text-lg">
-                Um processo simples e transparente para levar o melhor cuidado até você.
+                Faça parte da nossa união em apenas alguns passos simples.
               </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative mb-16">
               <div className="hidden lg:block absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 -translate-y-1/2 -z-0"></div>
               {[
-                { step: 1, title: "Contato", desc: "Entre em contato via telefone, WhatsApp ou formulário." },
-                { step: 2, title: "Avaliação", desc: "Analisamos o perfil e as necessidades específicas do paciente." },
-                { step: 3, title: "Seleção", desc: "Selecionamos o cuidador ideal para o perfil solicitado." },
-                { step: 4, title: "Início", desc: "O atendimento começa com supervisão e acompanhamento." }
+                { step: 1, title: "Cadastro", desc: "Preencha o formulário de interesse abaixo ou fale conosco no WhatsApp." },
+                { step: 2, title: "Documentação", desc: "Envie os documentos necessários para validação profissional." },
+                { step: 3, title: "Aprovação", desc: "Nossa equipe analisa seu perfil e confirma sua filiação." },
+                { step: 4, title: "Benefícios", desc: "Comece a desfrutar de todas as vantagens de ser associado." }
               ].map((item, idx) => (
                 <motion.div 
                   key={idx}
@@ -496,6 +515,73 @@ export default function App() {
                 </motion.div>
               ))}
             </div>
+
+            {/* Membership Form */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 border border-slate-100"
+            >
+              <h3 className="text-2xl font-bold text-slate-900 mb-6 text-center">Formulário de Filiação</h3>
+              <form className="space-y-4" onSubmit={handleFiliaSubmit}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-sm font-semibold text-slate-700">Nome Completo</label>
+                    <input 
+                      type="text" 
+                      required
+                      value={filiaForm.nome}
+                      onChange={(e) => setFiliaForm({...filiaForm, nome: e.target.value})}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:ring-primary focus:border-primary outline-none transition-all" 
+                      placeholder="Seu Nome" 
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-sm font-semibold text-slate-700">Telefone / WhatsApp</label>
+                    <input 
+                      type="tel" 
+                      required
+                      value={filiaForm.telefone}
+                      onChange={(e) => setFiliaForm({...filiaForm, telefone: e.target.value})}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:ring-primary focus:border-primary outline-none transition-all" 
+                      placeholder="(16) 99999-9999" 
+                    />
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-slate-700">Tempo de Experiência como Cuidador</label>
+                  <input 
+                    type="text" 
+                    required
+                    value={filiaForm.experiencia}
+                    onChange={(e) => setFiliaForm({...filiaForm, experiencia: e.target.value})}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:ring-primary focus:border-primary outline-none transition-all" 
+                    placeholder="Ex: 2 anos, 5 meses..." 
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-slate-700">Cidade</label>
+                  <input 
+                    type="text" 
+                    required
+                    value={filiaForm.cidade}
+                    onChange={(e) => setFiliaForm({...filiaForm, cidade: e.target.value})}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:ring-primary focus:border-primary outline-none transition-all" 
+                    placeholder="Ribeirão Preto" 
+                  />
+                </div>
+                <motion.button 
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  type="submit"
+                  className="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
+                >
+                  <span className="material-symbols-outlined normal-case">send</span>
+                  Enviar via WhatsApp
+                </motion.button>
+              </form>
+            </motion.div>
           </div>
         </section>
 
@@ -503,7 +589,7 @@ export default function App() {
         <section className="py-24 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">O que dizem nossos clientes</h2>
+              <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">O que dizem nossos associados</h2>
               <div className="w-20 h-1.5 bg-primary mx-auto rounded-full mb-6"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -548,9 +634,9 @@ export default function App() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-6">Entre em Contato</h2>
+                <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-6">Fale com o Sindicato</h2>
                 <p className="text-slate-600 mb-8 text-lg">
-                  Estamos prontos para atender você e sua família. Tire suas dúvidas ou solicite um orçamento sem compromisso.
+                  Dúvidas sobre direitos, filiação ou benefícios? Nossa equipe está pronta para te orientar.
                 </p>
                 <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -569,7 +655,7 @@ export default function App() {
                   </div>
                   <div className="space-y-1">
                     <label htmlFor="message" className="text-sm font-semibold text-slate-700">Como podemos ajudar?</label>
-                    <textarea id="message" className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Descreva brevemente as necessidades de cuidado" rows={4} required></textarea>
+                    <textarea id="message" className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Dúvidas, denúncias ou solicitações" rows={4} required></textarea>
                   </div>
                   
                   <div className="flex items-start gap-3 py-2">
@@ -634,12 +720,12 @@ export default function App() {
             <div className="col-span-1 lg:col-span-1">
               <div className="flex items-center gap-3 mb-6">
                 <div className="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
-                  <span className="material-symbols-outlined text-xl normal-case">medical_services</span>
+                  <span className="material-symbols-outlined text-xl normal-case">groups</span>
                 </div>
-                <span className="text-white text-lg font-bold">Cuidadores Profissionais</span>
+                <span className="text-white text-lg font-bold">Sindicato Cuidadores</span>
               </div>
               <p className="text-sm leading-relaxed mb-6">
-                Referência em assistência humanizada e profissional para idosos e cuidados especiais em Ribeirão Preto.
+                Representação, defesa de direitos e valorização dos cuidadores profissionais de Ribeirão Preto e região.
               </p>
               <div className="flex gap-4">
                 <a href="#" aria-label="Facebook" className="size-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
@@ -653,7 +739,7 @@ export default function App() {
             <div>
               <h4 className="text-white font-bold mb-6">Links Rápidos</h4>
               <ul className="space-y-3">
-                {["Início", "Quem Somos", "Serviços", "Como Funciona", "Contato"].map((item) => (
+                {["Início", "O Sindicato", "Benefícios", "Filie-se", "Contato"].map((item) => (
                   <li key={item}>
                     <a href={`#${item.toLowerCase().replace(" ", "-")}`} className="hover:text-primary transition-colors text-sm">{item}</a>
                   </li>
@@ -661,12 +747,12 @@ export default function App() {
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-bold mb-6">Nossos Serviços</h4>
+              <h4 className="text-white font-bold mb-6">Benefícios</h4>
               <ul className="space-y-3">
-                <li><a href="#servicos" className="hover:text-primary transition-colors text-sm">Cuidador de Idosos</a></li>
-                <li><a href="#servicos" className="hover:text-primary transition-colors text-sm">Acompanhamento Hospitalar</a></li>
-                <li><a href="#servicos" className="hover:text-primary transition-colors text-sm">Cuidados Pós-Cirúrgicos</a></li>
-                <li><a href="#servicos" className="hover:text-primary transition-colors text-sm">Auxílio em Medicação</a></li>
+                <li><a href="#benefícios" className="hover:text-primary transition-colors text-sm">Assessoria Jurídica</a></li>
+                <li><a href="#benefícios" className="hover:text-primary transition-colors text-sm">Cursos e Capacitação</a></li>
+                <li><a href="#benefícios" className="hover:text-primary transition-colors text-sm">Convênios Exclusivos</a></li>
+                <li><a href="#benefícios" className="hover:text-primary transition-colors text-sm">Saúde do Trabalhador</a></li>
               </ul>
             </div>
             <div>
@@ -693,7 +779,7 @@ export default function App() {
           </div>
           <div className="mt-16 pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
             <div className="flex flex-col items-center md:items-start gap-1">
-              <p>© 2024 Cuidadores Profissionais. Todos os direitos reservados. Ribeirão Preto - SP.</p>
+              <p>© 2024 Sindicato dos Cuidadores Profissionais. Todos os direitos reservados. Ribeirão Preto - SP.</p>
               <p>Feito por <a href="https://eficazbot.com.br/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">EficazBot</a></p>
             </div>
             <div className="flex gap-6">
