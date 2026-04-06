@@ -73,6 +73,16 @@ const CAROUSEL_IMAGES = [
   { url: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=800&h=600&q=80", alt: "Equipe médica profissional" },
 ];
 
+const Logo = ({ className = "size-10", iconSize = "size-6" }: { className?: string, iconSize?: string }) => (
+  <div className={`${className} bg-primary rounded-xl flex items-center justify-center text-white shadow-lg shadow-primary/20 overflow-hidden shrink-0`}>
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={iconSize}>
+      <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z" fill="white" />
+      <circle cx="12" cy="9" r="2.5" fill="#2b8dee" />
+      <path d="M7 15C7 13.3431 9.23858 12 12 12C14.7614 12 17 13.3431 17 15" stroke="#2b8dee" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  </div>
+);
+
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showCookieBanner, setShowCookieBanner] = useState(true);
@@ -162,10 +172,10 @@ Cidade: ${filiaForm.cidade}`;
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center gap-3">
-              <div className="size-10 bg-primary rounded-lg flex items-center justify-center text-white">
-                <span className="material-symbols-outlined text-2xl normal-case">groups</span>
-              </div>
-              <span className="text-slate-900 text-xl font-bold tracking-tight">Sindicato Cuidadores</span>
+              <Logo className="size-11" iconSize="size-7" />
+              <span className="text-slate-900 text-xl font-bold tracking-tight leading-tight">
+                Sindicato dos<br/><span className="text-primary">Cuidadores</span>
+              </span>
             </div>
             
             <nav className="hidden md:flex items-center gap-8">
@@ -719,9 +729,7 @@ Cidade: ${filiaForm.cidade}`;
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             <div className="col-span-1 lg:col-span-1">
               <div className="flex items-center gap-3 mb-6">
-                <div className="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
-                  <span className="material-symbols-outlined text-xl normal-case">groups</span>
-                </div>
+                <Logo className="size-9" iconSize="size-5" />
                 <span className="text-white text-lg font-bold">Sindicato Cuidadores</span>
               </div>
               <p className="text-sm leading-relaxed mb-6">
