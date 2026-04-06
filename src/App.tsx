@@ -174,7 +174,7 @@ Cidade: ${filiaForm.cidade}`;
             <div className="flex items-center gap-3">
               <Logo className="size-11" iconSize="size-7" />
               <span className="text-slate-900 text-xl font-bold tracking-tight leading-tight">
-                Sindicato dos<br/><span className="text-primary">Cuidadores</span>
+                Sindicato dos<br/><span className="text-primary">Cuidadores Profissionais</span>
               </span>
             </div>
             
@@ -730,7 +730,7 @@ Cidade: ${filiaForm.cidade}`;
             <div className="col-span-1 lg:col-span-1">
               <div className="flex items-center gap-3 mb-6">
                 <Logo className="size-9" iconSize="size-5" />
-                <span className="text-white text-lg font-bold">Sindicato Cuidadores</span>
+                <span className="text-white text-lg font-bold">Sindicato dos Cuidadores Profissionais</span>
               </div>
               <p className="text-sm leading-relaxed mb-6">
                 Representação, defesa de direitos e valorização dos cuidadores profissionais de Ribeirão Preto e região.
