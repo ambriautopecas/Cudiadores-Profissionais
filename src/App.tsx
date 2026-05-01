@@ -764,6 +764,21 @@ Cidade: ${filiaForm.cidade}`;
               </ul>
             </div>
             <div>
+              <h4 className="text-white font-bold mb-4">Documentos Importantes</h4>
+              <ul className="space-y-3 mb-8">
+                <li>
+                  <a href="/edital-convocacao-2026.html" target="_blank" className="flex items-center gap-2 text-sm hover:text-primary transition-colors text-slate-300">
+                    <span className="material-symbols-outlined text-primary text-xl">description</span>
+                    Edital de Convocação 2026
+                  </a>
+                </li>
+                <li>
+                  <a href="/orientacao-mpt-13.html" target="_blank" className="flex items-center gap-2 text-sm hover:text-primary transition-colors text-slate-300">
+                    <span className="material-symbols-outlined text-primary text-xl">gavel</span>
+                    Orientação MPT nº 13
+                  </a>
+                </li>
+              </ul>
               <h4 className="text-white font-bold mb-6">Contato</h4>
               <ul className="space-y-4 text-sm">
                 <li className="flex items-start gap-3">
